@@ -1,9 +1,12 @@
 package com.example.employeegradle.controller;
 
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -12,11 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+import com.example.employeegradle.dao.TaskDAO;
 import com.example.employeegradle.entity.Task;
 import com.example.employeegradle.repository.DepartmentRepository;
 import com.example.employeegradle.repository.EmployeeRepository;
 import com.example.employeegradle.repository.TaskRepository;
-import com.example.employeegradle.service.TaskService;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,21 +30,37 @@ public class TaskController {
 	private final TaskRepository taskRepository;
 	private final DepartmentRepository departmentRepository;
 	private final EmployeeRepository employeeRepository;
-	private final TaskService taskService;
+	private final TaskDAO taskDAO;
 	private final HttpSession session;
 
 	// 【営業課一覧を表示】
 	@GetMapping("/task/{id}")
-	public String showTask(@PathVariable int id, Model model) {
-
-		List<Task> taskList = departmentRepository.getById(id).getTaskList();
-
+	public String showTask(@PathVariable int id,@PageableDefault(size = 5) Pageable pageable, Model model) {
+		Page<Task> taskPages = taskDAO.findTaskAll(id, null, pageable);
 		model.addAttribute("department", departmentRepository.getById(id));
-
-		model.addAttribute("taskList", taskList);
-		// 全社員リスト用のラジオボタンチェック済にするセッション all をセット
+		model.addAttribute("taskList", taskPages);
 		session.setAttribute("mode", "all");
+		return "taskList";
+	}
+	// 【在籍社員一覧表示】
+	@GetMapping("/task/true/{id}")
+	public String showTrueFlg(@PathVariable int id, @PageableDefault(size = 5) Pageable pageable, Model model) {
+		// 在籍社員リストを取得
+		Page<Task> taskPages = taskDAO.findTaskAll(id, true, pageable);
+		model.addAttribute("department", departmentRepository.getById(id));
+		model.addAttribute("taskList", taskPages);
+		session.setAttribute("mode", true);
+		return "taskList";
+	}
 
+	// 【退職社員一覧表示】
+	@GetMapping("/task/false/{id}")
+	public String showFalseFlg(@PathVariable int id, @PageableDefault(size = 5) Pageable pageable, Model model) {
+		// 退職社員リストを取得
+		Page<Task> taskPages = taskDAO.findTaskAll(id, false, pageable);
+		model.addAttribute("department", departmentRepository.getById(id));
+		model.addAttribute("taskList", taskPages);
+		session.setAttribute("mode", false);
 		return "taskList";
 	}
 
@@ -64,38 +84,11 @@ public class TaskController {
 	@GetMapping("/task/delete/{employeeId}")
 	public String deleteTask(@PathVariable int employeeId, Model model) {
 
-
 		Task task = taskRepository.getById(employeeId);
 		task.setDeleteFlg(false);
 		taskRepository.save(task);
-	
+
 		employeeRepository.deleteById(employeeId);
 		return "redirect:/task/" + task.getDepartment().getId();
-	}
-
-	// 【在籍社員一覧表示】
-	@GetMapping("/task/true/{id}")
-	public String showTrueFlg(@PathVariable int id, Model model) {
-		// 在籍社員リストを取得
-		List<Task> taskList = taskService.findFlg(id, true);
-		model.addAttribute("department", departmentRepository.getById(id));
-		model.addAttribute("taskList", taskList);
-		model.addAttribute("department", departmentRepository.getById(id));
-		// 全社員リスト用のラジオボタンチェック済にするセッション true をセット
-		session.setAttribute("mode", "true");
-		return "taskList";
-	}
-
-	// 【退職社員一覧表示】
-	@GetMapping("/task/false/{id}")
-	public String showFalseFlg(@PathVariable int id, Model model) {
-		// 退職社員リストを取得
-		List<Task> taskList = taskService.findFlg(id, false);
-		model.addAttribute("department", departmentRepository.getById(id));
-		model.addAttribute("taskList", taskList);
-		model.addAttribute("department", departmentRepository.getById(id));
-		// 全社員リスト用のラジオボタンチェック済にするセッション false をセット
-		session.setAttribute("mode", "false");
-		return "taskList";
 	}
 }
