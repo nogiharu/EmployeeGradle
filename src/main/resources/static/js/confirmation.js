@@ -7,7 +7,9 @@ $(function() {
         url: "/webjars/datatables-plugins/i18n/Japanese.json"
       },
       lengthMenu: [5, 10, 20],
-      
+      /* dom:"<'row'<'col-sm-6'l><'col-sm-6 right'i>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12'p>>" */
       // 各種ボタンを有効化する
       //dom: "Bfrtip",
       //buttons: ["excelHtml5", "csvHtml5", "print"]
