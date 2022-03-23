@@ -5,8 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-
-	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link th:href="@{/webjars/datatables/css/dataTables.bootstrap5.min.css}" rel="stylesheet">
+	<link th:href="@{/webjars/datatables-buttons/css/buttons.dataTables.min.css}" rel="stylesheet">
 	<title>社員管理システム</title>
 	<style type="text/css">
 		.container table td.text-center {
@@ -32,11 +32,12 @@
 						th:checked="${session.mode == 'true'}">在籍社員　　　
 					<input type="radio" th:onclick="|location.href='/task/false/__${department.id}__'|"
 						th:checked="${session.mode == 'false'}">退職社員　　　
-						<input type="radio" th:onclick="|location.href='/department'|">営業課一覧へ戻る
+					<input type="radio" th:onclick="|location.href='/department'|">営業課一覧へ戻る
 				</div>
 
 				<!-- テープル枠線、カーソル -->
-				<table class="table table-bordered table-hover">
+				<table id="task-table" class="table table-bordered table-hover">
+					<thead>
 					<tr class="table-warning">
 						<th class="text-center">ID</th>
 						<th class="text-center">氏名</th>
@@ -47,7 +48,10 @@
 						<th></th>
 						<th></th>
 					</tr>
+				</thead>
+				
 					<form method="get">
+						<tbody>
 						<!-- 一覧画面表示 -->
 						<tr th:each="task : ${taskList}" th:object="${task}"
 							th:classappend="*{deleteFlg} ? '' : 'bg-secondary text-white' ">
@@ -59,17 +63,28 @@
 							<td th:text="*{updateDate}" class="text-center"></td>
 							<td class="text-center"><button type="submit" th:disabled="*{!deleteFlg}"
 									th:formaction="@{/task/update/__*{employeeId}__}"
+									th:onclick="|update('__*{employeeId}__')|"
 									class="btn btn-warning">編集</button></td>
 							<td class="text-center"><button type="submit" th:disabled="*{!deleteFlg}"
 									th:onclick="|check('__*{employeeId}__','__*{name}__')|"
 									class="btn btn-danger">退職</button>
 							</td>
 						</tr>
+					</tbody>
 					</form>
+			
 				</table>
 			</div>
 		</div>
 	</div>
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/datatables/js/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/webjars/datatables/js/dataTables.bootstrap5.min.js}"></script>
+	<script th:src="@{/webjars/datatables-buttons/js/dataTables.buttons.min.js}"></script>
+	<script th:src="@{/webjars/datatables-buttons/js/buttons.html5.min.js}"></script>
+	<script th:src="@{/webjars/datatables-buttons/js/buttons.print.min.js}"></script>
+	<script th:src="@{/webjars/jszip/jszip.min.js}"></script>
 	<script th:src="@{/js/confirmation.js}"></script>
 </body>
 
