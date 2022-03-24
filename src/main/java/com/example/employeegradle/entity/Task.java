@@ -23,6 +23,7 @@ public class Task {
 	private Department department;
 
 	@Id
+	@NumberFormat
 	private Integer employeeId;
 	
 	private String name;
