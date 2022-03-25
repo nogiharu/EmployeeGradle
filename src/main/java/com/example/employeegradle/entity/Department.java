@@ -1,5 +1,6 @@
 package com.example.employeegradle.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -22,5 +23,10 @@ public class Department {
     private String name;
     
     @OneToMany(mappedBy = "department")
-    List<Task> taskList;
+    List<Task> taskList = new ArrayList<>();
+
+    public void addList() {
+        Task task = new Task();
+        taskList.add(task);
+    }
 }

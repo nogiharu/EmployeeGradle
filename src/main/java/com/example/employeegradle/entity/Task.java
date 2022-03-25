@@ -1,6 +1,7 @@
 package com.example.employeegradle.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,12 +11,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
 
 
@@ -40,4 +44,5 @@ public class Task {
 	private LocalDate updateDate;
 
 	private Boolean deleteFlg;
+	
 }

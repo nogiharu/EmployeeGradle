@@ -1,5 +1,6 @@
 package com.example.employeegradle.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+import com.example.employeegradle.entity.Department;
 import com.example.employeegradle.entity.Task;
+import com.example.employeegradle.form.DepartmentForm;
+import com.example.employeegradle.form.TaskForm;
 import com.example.employeegradle.repository.DepartmentRepository;
 import com.example.employeegradle.repository.EmployeeRepository;
 import com.example.employeegradle.repository.TaskRepository;
@@ -61,12 +64,7 @@ public class TaskController {
 		return "redirect:/task/" + task.getDepartment().getId();
 	}
 
-	// 【社員のタスク追加処理】
-	@PostMapping("/task/add")
-	public String addTask(@Validated Task task,BindingResult result, Model model) {
-		taskRepository.save(task);
-		return "redirect:/department";
-	}
+	
 
 	// 【社員とタスクの削除処理】
 	@GetMapping("/task/delete/{employeeId}")

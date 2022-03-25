@@ -8,7 +8,9 @@ import java.util.List;
 
 import com.example.employeegradle.entity.Employee;
 import com.example.employeegradle.entity.Task;
+import com.example.employeegradle.form.TaskForm;
 import com.example.employeegradle.repository.DepartmentRepository;
+import com.example.employeegradle.repository.EmployeeRepository;
 import com.example.employeegradle.repository.TaskRepository;
 
 import lombok.AllArgsConstructor;
@@ -18,11 +20,12 @@ import lombok.AllArgsConstructor;
 public class TaskServiceImpl implements TaskService {
 	private final TaskRepository taskRepository;
 	private final DepartmentRepository departmentRepository;
+	private final EmployeeRepository employeeRepository;
 
 	@Override
 	public void taskSave(Employee employee) {
 
-		//初期値セット
+		// 初期値セット
 		int total = departmentRepository.findAll().size();
 		Task task = new Task();
 		task.setDeleteFlg(true);
@@ -34,12 +37,12 @@ public class TaskServiceImpl implements TaskService {
 		task.setDepartment(departmentRepository.getById((int) (Math.random() * total) + 1));
 		// 売上をランダムで振り分け
 		task.setSales((int) (Math.random() * 10000));
-		//task.setSales(0);
+		// task.setSales(0);
 		taskRepository.save(task);
 	}
 
 	@Override
-	public List<Task> findFlg(Integer id,boolean flg) {
+	public List<Task> findFlg(Integer id, boolean flg) {
 		// 該当課の社員リストを取得
 		List<Task> taskList = departmentRepository.getById(id).getTaskList();
 		// 格納リストを準備
@@ -49,8 +52,9 @@ public class TaskServiceImpl implements TaskService {
 		taskList.stream().filter(t -> flg).filter(t -> t.getDeleteFlg()).forEach(taskFlgList::add);
 		// flgが false なら => DeleteFlgを false のみ指定 => リストに追加
 		taskList.stream().filter(f -> !flg).filter(f -> !f.getDeleteFlg()).forEach(taskFlgList::add);
-		
+
 		return taskFlgList;
 	}
+
 
 }

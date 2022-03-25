@@ -33,5 +33,13 @@ update = (employeeId) => {
       form.submit();
 }
 
+let addButton = document.getElementById("addButton")
 
+addButton.addEventListener("click",function(){
+  let num = 0
+  num++
+  let copy = document.getElementsByTagName('tr')[num]
+  let clone = copy.firstElementChild.cloneNode(true)
+  document.body.appendChild(clone);
+})
 
