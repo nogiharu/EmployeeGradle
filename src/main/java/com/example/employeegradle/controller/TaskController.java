@@ -40,7 +40,6 @@ public class TaskController {
 		model.addAttribute("taskList", taskList);
 		// 全社員リスト用のラジオボタンチェック済にするセッション all をセット
 		session.setAttribute("mode", "all");
-
 		return "taskList";
 	}
 
