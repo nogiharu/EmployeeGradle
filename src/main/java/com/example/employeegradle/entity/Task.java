@@ -1,7 +1,7 @@
 package com.example.employeegradle.entity;
 
 import java.time.LocalDate;
-import java.util.List;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

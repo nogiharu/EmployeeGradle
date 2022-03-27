@@ -33,13 +33,36 @@ update = (employeeId) => {
       form.submit();
 }
 
-let addButton = document.getElementById("addButton")
 
-addButton.addEventListener("click",function(){
-  let num = 0
-  num++
-  let copy = document.getElementsByTagName('tr')[num]
-  let clone = copy.firstElementChild.cloneNode(true)
-  document.body.appendChild(clone);
-})
-
+function addButton() {
+  const parent = document.getElementById("parent");
+  let count = document.getElementsByClassName("count").length
+  //--------------------------【DEPARTMENT】----------------------------
+  const department = document.getElementById("department").cloneNode(true)
+  department.children[0].name = "taskList[" + count + "].department"
+  //--------------------------【EMPLOYEEID】----------------------------
+  const employeeId = document.getElementById("employeeId").cloneNode(true)
+  employeeId.children[0].name = "taskList[" + count + "].employeeId"
+  //-----------------------------【AREA】----------------------------
+  const area = document.getElementById("area").cloneNode(true)
+  area.children[0].name = "taskList[" + count + "].area"
+  //-----------------------------【SALES】----------------------------
+  const sales = document.getElementById("sales").cloneNode(true)
+  sales.children[0].name = "taskList[" + count + "].sales"
+  //--------------------------【CUSTOMERS】----------------------------
+  const customers = document.getElementById("customers").cloneNode(true)
+  customers.children[0].name = "taskList[" + count + "].customers"
+  //--------------------------【UPDATEDATE】----------------------------
+  const updateDate = document.getElementById("updateDate").cloneNode(true)
+  updateDate.children[0].name = "taskList[" + count + "].updateDate"
+  //--------------------------------------------------------------------
+  let tr = document.createElement("tr")
+  tr.className = "count"
+  tr.appendChild(department)
+  tr.appendChild(employeeId)
+  tr.appendChild(area)
+  tr.appendChild(sales)
+  tr.appendChild(customers)
+  tr.appendChild(updateDate)
+  parent.appendChild(tr)
+}

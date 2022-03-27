@@ -17,7 +17,6 @@ import com.example.employeegradle.entity.Employee;
 import com.example.employeegradle.form.EmployeeForm;
 import com.example.employeegradle.form.EmployeeQuery;
 import com.example.employeegradle.repository.EmployeeRepository;
-import com.example.employeegradle.service.TaskService;
 import com.example.employeegradle.valition.Groups;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +27,6 @@ public class EmployeeController {
     private final EmployeeRepository employeeRepository;
     private final HttpSession session;
     private final EmployeeDAO dao;
-    private final TaskService taskService;
 
     // 新規登録画面表示
     @GetMapping("/employee/regist")
@@ -48,10 +46,6 @@ public class EmployeeController {
             // エラーがなければ新規登録後、リダイレクト
             Employee employee = employeeForm.toEntity();
             employeeRepository.save(employee);
-            //-----------------------------------------------------------
-            taskService.taskSave(employee);
-            //------------------------------------------------------------
-
             return "redirect:/employee";
         }
     }

@@ -1,4 +1,4 @@
-package com.example.employeegradle.form;
+/* package com.example.employeegradle.form;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,5 @@ public class TaskForm {
 
     private Boolean deleteFlg;
 
-	public TaskForm() {
-        //department = "";
-        name = "";
-        //employeeId = "";
-        area = "";
-        sales = "";
-        customers = "";
-        updateDate = "";
-        deleteFlg = true;
-    }
-}
+	
+} */

@@ -1,22 +1,21 @@
 package com.example.employeegradle.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.employeegradle.entity.Department;
+
 import com.example.employeegradle.entity.Task;
-import com.example.employeegradle.form.DepartmentForm;
-import com.example.employeegradle.form.TaskForm;
+
+
 import com.example.employeegradle.repository.DepartmentRepository;
 import com.example.employeegradle.repository.EmployeeRepository;
 import com.example.employeegradle.repository.TaskRepository;

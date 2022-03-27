@@ -2,44 +2,20 @@ package com.example.employeegradle.service;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.employeegradle.entity.Employee;
+
 import com.example.employeegradle.entity.Task;
-import com.example.employeegradle.form.TaskForm;
 import com.example.employeegradle.repository.DepartmentRepository;
-import com.example.employeegradle.repository.EmployeeRepository;
-import com.example.employeegradle.repository.TaskRepository;
+
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
-	private final TaskRepository taskRepository;
 	private final DepartmentRepository departmentRepository;
-	private final EmployeeRepository employeeRepository;
-
-	@Override
-	public void taskSave(Employee employee) {
-
-		// 初期値セット
-		int total = departmentRepository.findAll().size();
-		Task task = new Task();
-		task.setDeleteFlg(true);
-		task.setEmployeeId(employee.getId());
-		task.setName(employee.getName());
-		task.setUpdateDate(LocalDate.now());
-		task.setCustomers((int) (Math.random() * 10));
-		// 営業課をランダムで振り分け
-		task.setDepartment(departmentRepository.getById((int) (Math.random() * total) + 1));
-		// 売上をランダムで振り分け
-		task.setSales((int) (Math.random() * 10000));
-		// task.setSales(0);
-		taskRepository.save(task);
-	}
 
 	@Override
 	public List<Task> findFlg(Integer id, boolean flg) {

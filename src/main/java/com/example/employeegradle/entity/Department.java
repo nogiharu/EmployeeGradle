@@ -25,8 +25,5 @@ public class Department {
     @OneToMany(mappedBy = "department")
     List<Task> taskList = new ArrayList<>();
 
-    public void addList() {
-        Task task = new Task();
-        taskList.add(task);
-    }
+
 }
