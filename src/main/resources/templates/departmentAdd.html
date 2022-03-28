@@ -28,10 +28,11 @@
 				<h4 class="border-bottom my-3">営業課新規追加</h4>
 				<!-- テープル枠線、カーソル -->
 				<button class="btn mb-3 btn-primary" th:onclick="|addButton()|">複製</button>
-				<form method="post" th:object="${departmentForm}">
+				<button class="btn btn-warning mb-3" th:onclick="|saveData()|">一時保存</button>
+				<form method="post" th:object="${departmentForm}" id="submit">
 					<button type="submit" th:formaction="@{/department/add}"
 						class="btn btn-danger mb-3 ms-1">確定</button>
-					<table class="table table-bordered table-hover" >
+					<table class="table table-bordered table-hover">
 						<thead>
 							<tr class="table-warning">
 								<th class="text-center">営業課</th>
@@ -42,45 +43,46 @@
 								<th class="text-center">更新日時</th>
 							</tr>
 						</thead>
-						<button type="submit" th:formaction="@{/task/add}" name="add"
-							class="btn btn-warning mb-3">一時保存</button>
+
 						<tbody id="parent">
 							<tr class="count">
-							<td class="text-center" id="department">
-								<select name="taskList[0].department">
-									<option th:each="dept : ${departmentList}" th:value="${dept.id}"
-										th:text="${dept.name}" th:selected="${dept.name == selectedValue}">
-									</option>
-								</select>
-							</td>
-							<td class="text-center" id="employeeId">
-								<select name="taskList[0].employeeId">
-									<option th:each="emp : ${employeeList}" th:value="${emp.id}"
-										th:text="${'[ID]' + emp.id + ' [名前]' + emp.name}"
-										th:selected="${emp.id == selectedValue}">
-									</option>
-								</select>
-							</td>
-							<td class="text-center" id="area">
-								<input type="text" name="taskList[0].area" class="form-control">
-							</td>
-							<td class="text-center" id="sales">
-								<input type="text" name="taskList[0].sales" class="form-control" />
-							</td>
-							<td class="text-center" id="customers">
-								<input type="text" name="taskList[0].customers" class="form-control">
-							</td>
-							<td class="text-center" id="updateDate">
-								<input type="date" name="taskList[0].updateDate" class="form-control" />
-							</td>
-						</tr>
+								<td class="text-center" id="td-department">
+									<select name="taskList[0].department" id="select-department">
+										<option th:each="dept : ${departmentList}" th:value="${dept.id}"
+											th:text="${dept.name}" th:selected="${dept.name == selectedValue}">
+										</option>
+									</select>
+								</td>
+								<td class="text-center" id="td-employeeId">
+									<select name="taskList[0].employeeId" id="select-employeeId">
+										<option th:each="emp : ${employeeList}" th:value="${emp.id}"
+											th:text="${'[ID]' + emp.id + ' [名前]' + emp.name}"
+											th:selected="${emp.id == selectedValue}">
+										</option>
+									</select>
+								</td>
+								<td class="text-center" id="td-area">
+									<input type="text" name="taskList[0].area" class="form-control" id="input-area">
+								</td>
+								<td class="text-center" id="td-sales">
+									<input type="text" name="taskList[0].sales" class="form-control" id="input-sales" />
+								</td>
+								<td class="text-center" id="td-customers">
+									<input type="text" name="taskList[0].customers" class="form-control"
+										id="input-customers">
+								</td>
+								<td class="text-center" id="td-updateDate">
+									<input type="date" name="taskList[0].updateDate" class="form-control"
+										id="input-updateDate" />
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</form>
 			</div>
 		</div>
 	</div>
-	<script th:src="@{/js/confirmation.js}"></script>
+	<script th:src="@{/js/formAction.js}"></script>
 </body>
 
 </html>

@@ -13,9 +13,8 @@ import com.example.employeegradle.entity.Department;
 import com.example.employeegradle.form.DepartmentForm;
 
 import com.example.employeegradle.repository.DepartmentRepository;
-import com.example.employeegradle.repository.EmployeeRepository;
 import com.example.employeegradle.service.DeaprtmentService;
-
+import com.example.employeegradle.service.TaskService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class DepartmentController {
 
     private final DepartmentRepository departmentRepository;
-    private final EmployeeRepository employeeRepository;
     private final DeaprtmentService deaprtmentService;
+    private final TaskService taskService;
 
     private final HttpSession session;
     private final CalculationDAO calcDAO;
@@ -48,9 +47,10 @@ public class DepartmentController {
     // 新規登録画面表示
     @GetMapping("/department/add")
     public String showRegist(Model model,DepartmentForm  departmentForm) {
-        // 新規登録用の"regist"をセッションに格納
+        
+        // タスクを登録した社員は「departmentAdd.html」の「select」タグに表示しない。
+        model.addAttribute("employeeList", taskService.findDistinct());
         model.addAttribute("departmentList", departmentRepository.findAll());
-        model.addAttribute("employeeList", employeeRepository.findAll());
         return "departmentAdd";
     }
 

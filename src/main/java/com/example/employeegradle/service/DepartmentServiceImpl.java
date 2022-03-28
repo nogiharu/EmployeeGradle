@@ -32,11 +32,13 @@ public class DepartmentServiceImpl implements DeaprtmentService {
             // 課取得
             Department department = departmentRepository.findById(t.getDepartment()).get();
             // 社員名取得
-            String name = employeeRepository.findById(t.getEmployeeId()).get().getName();
+            if (t.getEmployeeId() > 0) {
+                String name = employeeRepository.findById(t.getEmployeeId()).get().getName();
             // Taskセーブ
             Task task = new Task(department, t.getEmployeeId(), name,
                     t.getArea(), t.getSales(), t.getCustomers(), t.getUpdateDate(), true);
             taskRepository.save(task);
+            }
         });
 
     }

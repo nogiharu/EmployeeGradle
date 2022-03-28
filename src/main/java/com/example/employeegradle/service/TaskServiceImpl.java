@@ -4,11 +4,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-
+import com.example.employeegradle.entity.Employee;
 import com.example.employeegradle.entity.Task;
 import com.example.employeegradle.repository.DepartmentRepository;
-
+import com.example.employeegradle.repository.EmployeeRepository;
+import com.example.employeegradle.repository.TaskRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -16,6 +18,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 	private final DepartmentRepository departmentRepository;
+	private final EmployeeRepository employeeRepository;
+	private final TaskRepository taskRepository;
 
 	@Override
 	public List<Task> findFlg(Integer id, boolean flg) {
@@ -32,5 +36,16 @@ public class TaskServiceImpl implements TaskService {
 		return taskFlgList;
 	}
 
+	@Override
+	public List<Employee> findDistinct() {
 
+		List<Employee> employeeList = employeeRepository.findAll();
+		List<Task> taskList = taskRepository.findAll();
+		// タスクIDと社員IDが一致していないもののみ社員を抽出
+		List<Employee> employees = employeeList.stream().filter(emp -> taskList.stream()
+				.allMatch(task -> task.getEmployeeId() != emp.getId()))
+				.collect(Collectors.toList());
+
+		return employees;
+	}
 }
