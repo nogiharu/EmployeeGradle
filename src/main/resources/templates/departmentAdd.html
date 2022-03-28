@@ -29,6 +29,7 @@
 				<!-- テープル枠線、カーソル -->
 				<button class="btn mb-3 btn-primary" th:onclick="|addButton()|">複製</button>
 				<button class="btn btn-warning mb-3" th:onclick="|saveData()|">一時保存</button>
+				<button class="btn btn-success mb-3" th:onclick="|cancel()|">一時保存取り消し</button>
 				<form method="post" th:object="${departmentForm}" id="submit">
 					<button type="submit" th:formaction="@{/department/add}"
 						class="btn btn-danger mb-3 ms-1">確定</button>
@@ -62,10 +63,10 @@
 									</select>
 								</td>
 								<td class="text-center" id="td-area">
-									<input type="text" name="taskList[0].area" class="form-control" id="input-area">
+									<input type="text" name="area" class="form-control" id="input-area">
 								</td>
 								<td class="text-center" id="td-sales">
-									<input type="text" name="taskList[0].sales" class="form-control" id="input-sales" />
+									<input type="text" name="sales" class="form-control" id="input-sales" />
 								</td>
 								<td class="text-center" id="td-customers">
 									<input type="text" name="taskList[0].customers" class="form-control"

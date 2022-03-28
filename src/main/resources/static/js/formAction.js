@@ -57,7 +57,7 @@ function saveData() {
 
 // 画面読み込み時、ローカルストレージにデータがあれば表示
 window.onload = function () {
-    
+
     if (localStorage.length) {
         let data = new Array(localStorage.length)
         for (let i = 0; i < data.length; i++) {
@@ -131,3 +131,11 @@ let submit = document.getElementById("submit")
 submit.addEventListener("submit", function () {
     localStorage.clear()
 })
+
+// 「一時保存取り消し」が押下されたらローカルストレージをクリア
+function cancel(){
+
+    alert("取り消しました！")
+    localStorage.clear()
+    location.reload();
+}
