@@ -1,15 +1,13 @@
 package com.example.employeegradle.entity;
 
-import java.time.LocalDate;
-
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,8 +38,7 @@ public class Task {
 	@NumberFormat
 	private Integer customers;
 
-	@DateTimeFormat(iso = ISO.DATE)
-	private LocalDate updateDate;
+	private String updateDate;
 
 	private Boolean deleteFlg;
 	

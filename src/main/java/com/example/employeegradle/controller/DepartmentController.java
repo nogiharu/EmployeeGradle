@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -56,7 +58,12 @@ public class DepartmentController {
 
     // 【社員のタスク追加処理】
 	@PostMapping("/department/add")
-    public String addTask(DepartmentForm departmentForm, Model model) {
+    public String addTask(@Validated DepartmentForm departmentForm,BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("employeeList", taskService.findDistinct());
+            model.addAttribute("departmentList", departmentRepository.findAll());
+            return "departmentAdd";
+        }
         deaprtmentService.departmentAdd(departmentForm);
 		return "redirect:/department";
 	}

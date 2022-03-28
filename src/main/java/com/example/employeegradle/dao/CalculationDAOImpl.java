@@ -12,9 +12,9 @@ import javax.persistence.criteria.Path;
 
 import com.example.employeegradle.dto.CalculationDTO;
 import com.example.employeegradle.entity.Department;
-import com.example.employeegradle.entity.Department_;
+import com.example.employeegradle.metaModel.*;
 import com.example.employeegradle.entity.Task;
-import com.example.employeegradle.entity.Task_;
+
 
 import org.springframework.stereotype.Repository;
 

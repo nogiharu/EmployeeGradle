@@ -1,31 +1,25 @@
 package com.example.employeegradle.form;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat;
 
 import lombok.Data;
 
 @Data
 public class DepartmentForm {
     
-    List<TaskList> taskList;
+        private List<Integer> department;
 
-    @Data
-    public static class TaskList {
-        private int department;
+        private List<Integer> employeeId;
 
-        private int employeeId;
+        private List<String> area;
 
-        private String area;
-
-        private int sales;
-
-        private int customers;
+        @NumberFormat
+        private List<Integer> sales;
+        @NumberFormat
+        private List<Integer> customers;
         
-        @DateTimeFormat(iso = ISO.DATE)
-        private LocalDate updateDate;
-    }
+        private List<String> updateDate;
+
 }
