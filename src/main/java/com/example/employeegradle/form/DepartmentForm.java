@@ -21,5 +21,4 @@ public class DepartmentForm {
         private List<Integer> customers;
         
         private List<String> updateDate;
-
 }

@@ -1,12 +1,12 @@
 // 「複製」を押下
 function addButton() {
-    const parent = document.getElementById("parent");
+    const parent = document.getElementById("parent")
     let tr = document.getElementsByTagName("tr")
     let tr_clone = tr[tr.length - 1].cloneNode(true)
     parent.appendChild(tr_clone)
 }
 
-// 一時保存
+// 「一時保存」押下
 function saveData() {
     let tr = document.getElementsByTagName("tr")
     alert(tr.length - 1 + "件一時保存しました！")
@@ -30,20 +30,21 @@ window.onload = function () {
     if (localStorage.length) {
         let data = new Array(localStorage.length)
         for (let i = 0; i < data.length; i++) {
-            let json = JSON.parse(localStorage.getItem("data" + i))
-            data[i] = new Array(json.length)
-            for (let j = 0; j < json.length; j++) {
-                data[i][j] = json[j]
+            let jsonData = JSON.parse(localStorage.getItem("data" + i))
+            data[i] = new Array(jsonData.length)
+            for (let j = 0; j < jsonData.length; j++) {
+                data[i][j] = jsonData[j]
             }
         }
-        // ローカルストレージのデータ-1の数だけ「tr」タグを生成
-        for (let i = 1; i < data.length - 1; i++) {
+
+        // ローカルストレージのデータの数だけ「tr」タグを生成
+        for (let i = 1; i < data.length; i++) {
             const parent = document.getElementById("parent");
             let tr = document.getElementsByTagName("tr")
             let tr_clone = tr[i].cloneNode(true)
             parent.appendChild(tr_clone)
         }
-        // 
+        // ローカルストレージから取得したデータを各nameにセット
         for (let i = 0; i < data.length; i++) {
             document.getElementsByName("department")[i].value = data[i][0]
             document.getElementsByName("employeeId")[i].value = data[i][1]
@@ -54,14 +55,31 @@ window.onload = function () {
         }
     }
 }
+
 // 「確定」が押下されたらローカルストレージをクリア
 let submit = document.getElementById("submit")
 submit.addEventListener("submit", function () {
     localStorage.clear()
 })
+
 // 「一時保存取り消し」が押下されたらローカルストレージをクリア
 function cancel() {
     alert("取り消しました！")
     localStorage.clear()
     location.reload();
 }
+
+// 「削除」を押下されたら該当の行と該当のローカルストレージを削除
+function deleteTr(obj) {
+    let defaultRow = document.getElementsByTagName("tr")
+    let tr = obj.parentNode.parentNode
+        localStorage.removeItem("data"+ tr.sectionRowIndex)
+    if (defaultRow.length > 2) {
+        tr.parentNode.deleteRow(tr.sectionRowIndex)
+    }
+}
+
+// ブラウザバック強制リロード
+window.addEventListener('pageshow', () => {
+    if (window.performance.navigation.type == 2) location.reload();
+});

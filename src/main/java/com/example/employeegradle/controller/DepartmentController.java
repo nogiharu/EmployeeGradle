@@ -50,15 +50,17 @@ public class DepartmentController {
     @GetMapping("/department/add")
     public String showRegist(Model model,DepartmentForm  departmentForm) {
         
+       // int[] selectedValue = {1,2,3};
         // タスクを登録した社員は「departmentAdd.html」の「select」タグに表示しない。
         model.addAttribute("employeeList", taskService.findDistinct());
         model.addAttribute("departmentList", departmentRepository.findAll());
+        model.addAttribute("selectedValue", 0);
         return "departmentAdd";
     }
 
     // 【社員のタスク追加処理】
 	@PostMapping("/department/add")
-    public String addTask(@Validated DepartmentForm departmentForm,BindingResult result, Model model) {
+    public String addDepartmentAndTask(@Validated DepartmentForm departmentForm,BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("employeeList", taskService.findDistinct());
             model.addAttribute("departmentList", departmentRepository.findAll());

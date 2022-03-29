@@ -25,12 +25,45 @@ public class DepartmentServiceImpl implements DeaprtmentService {
     public void departmentAdd(DepartmentForm departmentForm) {
 
         Optional<DepartmentForm> op = Optional.of(departmentForm);
-        op.ifPresent(x -> {
-            for (int i = 0; i < x.getDepartment().size(); i++) {
-                Department department = departmentRepository.findById(x.getDepartment().get(i)).get();
-                String name = employeeRepository.findById(x.getEmployeeId().get(i)).get().getName();
-                Task task = new Task(department, x.getEmployeeId().get(i), name, x.getArea().get(i), 
-                        x.getSales().get(i), x.getCustomers().get(i), x.getUpdateDate().get(i), true);
+        op.ifPresent(df -> {
+            for (int i = 0; i < df.getDepartment().size(); i++) {
+                // 部署
+                System.out.println(df.getDepartment().size());
+                Department department = departmentRepository.findById(df.getDepartment().get(i)).get();
+                // 社員名
+                String name = employeeRepository.findById(df.getEmployeeId().get(i)).get().getName();
+                // 社員ID
+                int employeeId = df.getEmployeeId().get(i);
+                // 担当地区
+                String area;
+                try {
+                    area = df.getArea().get(i);
+                } catch (IndexOutOfBoundsException e) {
+                    area = "";
+                }
+                // 売上
+                int sales;
+                try {
+                    sales = df.getSales().get(i);
+                } catch (IndexOutOfBoundsException | NullPointerException e) {
+                    sales = 0;
+                }
+                // 顧客数
+                int customers;
+                try {
+                    customers = df.getCustomers().get(i);
+                } catch (IndexOutOfBoundsException | NullPointerException e) {
+                    customers = 0;
+                }
+                // 更新日
+                String updateDate;
+                try {
+                    updateDate = df.getUpdateDate().get(i);
+                } catch (IndexOutOfBoundsException e) {
+                    updateDate = "";
+                }
+                Task task = new Task(department, employeeId, name, area,
+                        sales, customers, updateDate, true);
                 taskRepository.save(task);
             }
         });

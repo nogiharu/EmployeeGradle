@@ -41,5 +41,4 @@ public class Task {
 	private String updateDate;
 
 	private Boolean deleteFlg;
-	
 }
