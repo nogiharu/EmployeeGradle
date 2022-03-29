@@ -27,20 +27,17 @@ function saveData() {
 
 // 画面読み込み時、ローカルストレージにデータがあれば表示
 window.onload = function () {
-
     if (localStorage.length) {
         let data = new Array(localStorage.length)
         for (let i = 0; i < data.length; i++) {
-            //「data"i"」キー名を取得
             let json = JSON.parse(localStorage.getItem("data" + i))
             data[i] = new Array(json.length)
             for (let j = 0; j < json.length; j++) {
-                //「data[i][j]」にJsonに保存したValueを格納
                 data[i][j] = json[j]
             }
         }
         // ローカルストレージのデータ-1の数だけ「tr」タグを生成
-        for (let i = 0; i < data.length - 1; i++) {
+        for (let i = 1; i < data.length - 1; i++) {
             const parent = document.getElementById("parent");
             let tr = document.getElementsByTagName("tr")
             let tr_clone = tr[i].cloneNode(true)
