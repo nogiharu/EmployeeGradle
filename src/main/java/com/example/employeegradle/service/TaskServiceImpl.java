@@ -42,8 +42,9 @@ public class TaskServiceImpl implements TaskService {
 		List<Employee> employeeList = employeeRepository.findAll();
 		List<Task> taskList = taskRepository.findAll();
 		// タスクIDと社員IDが一致していないもののみ社員を抽出
-		List<Employee> employees = employeeList.stream().filter(emp -> taskList.stream()
-				.noneMatch(task -> emp.getId() == task.getEmployeeId() ))
+		List<Employee> employees = employeeList
+				.stream()
+				.filter(emp -> taskList.stream().noneMatch(task -> emp.getId() == task.getEmployeeId()))
 				.collect(Collectors.toList());
 
 		return employees;

@@ -10,7 +10,6 @@ function addButton() {
 function saveData() {
     let tr = document.getElementsByTagName("tr")
     alert(tr.length - 1 + "件一時保存しました！")
-    let data = []
     // Json形式にして「data"i"」キー名で保存
     for (let i = 0; i < tr.length; i++) {
         let data = [
@@ -19,33 +18,33 @@ function saveData() {
             document.getElementsByName("area")[i].value,
             document.getElementsByName("sales")[i].value,
             document.getElementsByName("customers")[i].value,
-            document.getElementsByName("updateDate")[i].value
+            document.getElementsByName("updateDate")[i].value,
+            i
         ]
-        localStorage.setItem("data" + i, JSON.stringify(data))
+        localStorage.setItem("data" + i, JSON.stringify(data));
     }
 }
 
-// 画面読み込み時、ローカルストレージにデータがあれば表示
+// 画面読み込み時、ローカルストレージにデータがあれば、表示
 window.onload = function () {
+    // ローカルストレージから取得したデータを配列(data)に格納
     if (localStorage.length) {
         let data = new Array(localStorage.length)
         for (let i = 0; i < data.length; i++) {
-            let jsonData = JSON.parse(localStorage.getItem("data" + i))
+            let jsonData = JSON.parse(localStorage.getItem(localStorage.key(i)))
             data[i] = new Array(jsonData.length)
             for (let j = 0; j < jsonData.length; j++) {
                 data[i][j] = jsonData[j]
+                console.log(jsonData[6]);
             }
         }
-
-        // ローカルストレージのデータの数だけ「tr」タグを生成
+        // 配列(data)のデータの数だけ「tr」タグを生成後、
+        // 配列(data)から取得した値を各nameにセット
         for (let i = 1; i < data.length; i++) {
             const parent = document.getElementById("parent");
             let tr = document.getElementsByTagName("tr")
             let tr_clone = tr[i].cloneNode(true)
             parent.appendChild(tr_clone)
-        }
-        // ローカルストレージから取得したデータを各nameにセット
-        for (let i = 0; i < data.length; i++) {
             document.getElementsByName("department")[i].value = data[i][0]
             document.getElementsByName("employeeId")[i].value = data[i][1]
             document.getElementsByName("area")[i].value = data[i][2]
@@ -57,7 +56,7 @@ window.onload = function () {
 }
 
 // 「確定」が押下されたらローカルストレージをクリア
-let submit = document.getElementById("submit")
+const submit = document.getElementById("submit")
 submit.addEventListener("submit", function () {
     localStorage.clear()
 })
@@ -69,11 +68,16 @@ function cancel() {
     location.reload();
 }
 
-// 「削除」を押下されたら該当の行と該当のローカルストレージを削除
+// 「削除」を押下されたら該当の行を削除
 function deleteTr(obj) {
-    let defaultRow = document.getElementsByTagName("tr")
+    const defaultRow = document.getElementsByTagName("tr")
     let tr = obj.parentNode.parentNode
-        localStorage.removeItem("data"+ tr.sectionRowIndex)
+    let storage = "data" + tr.sectionRowIndex
+    for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) == storage) {
+            localStorage.removeItem(storage)
+        }
+    }
     if (defaultRow.length > 2) {
         tr.parentNode.deleteRow(tr.sectionRowIndex)
     }
